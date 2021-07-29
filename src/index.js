@@ -1,7 +1,7 @@
 // @flow
 import * as React from 'react';
 import type {Node} from 'react';
-import {View, Text, ActivityIndicator, StyleSheet} from 'react-native';
+import {Image} from 'react-native';
 import {
   NavigationContainer,
   getFocusedRouteNameFromRoute,
@@ -9,6 +9,11 @@ import {
 import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/Ionicons';
+
+import Styles, {colors} from './styles';
+import SplashScreen from './screens/SplashScreen';
+import CategoriesScreen from './screens/CategoriesScreen';
+import DefaultScreen from './screens/DefaultScreen';
 
 function getIconName(routeName: string, focused: boolean): string {
   switch (routeName) {
@@ -25,76 +30,22 @@ function getIconName(routeName: string, focused: boolean): string {
   }
 }
 
-function getHeaderTitle(route: any): string {
+const DEFAULT_LOGO = require('./assets/logo.png');
+
+function getHeaderTitle(route: any): string | Node {
   const routeName = getFocusedRouteNameFromRoute(route) || route.name;
+
+  if (routeName === 'Categories') {
+    return props => <Image style={Styles.logo} source={DEFAULT_LOGO} />;
+  }
   return routeName;
 }
-
-const Styles = StyleSheet.create({
-  container: {flex: 1, alignItems: 'center', justifyContent: 'center'},
-});
-
-type Props = {
-  navigation: {
-    replace: string => void,
-  },
-};
-
-function SplashScreen(props: Props): Node {
-  React.useEffect(() => {
-    setTimeout(() => {
-      props.navigation.replace('Root');
-    }, 2000);
-  });
-
-  return (
-    <View style={Styles.container}>
-      <ActivityIndicator size="large" color="tomato" />
-    </View>
-  );
-}
-
-function CartScreen(props: Props): Node {
-  return (
-    <View style={Styles.container}>
-      <Text>Cart Screen</Text>
-    </View>
-  );
-}
-function FavoritesScreen(props: Props): Node {
-  return (
-    <View style={Styles.container}>
-      <Text>Favorites Screen</Text>
-    </View>
-  );
-}
-function ProfileScreen(props: Props): Node {
-  return (
-    <View style={Styles.container}>
-      <Text>Profile Screen</Text>
-    </View>
-  );
-}
-function HomeScreen(props: Props): Node {
-  return (
-    <View style={Styles.container}>
-      <Text>Home Screen</Text>
-    </View>
-  );
-}
-function CategoriesScreen(props: Props): Node {
-  return (
-    <View style={Styles.container}>
-      <Text>Categories Screen</Text>
-    </View>
-  );
-}
-
 const Tab = createBottomTabNavigator();
 
-function Root(): Node {
+const Root = (): Node => {
   return (
     <Tab.Navigator
+      initialRouteName="Categories"
       screenOptions={({route}) => ({
         tabBarIcon: ({focused, color, size}) => {
           let iconName = getIconName(route.name, focused);
@@ -102,25 +53,24 @@ function Root(): Node {
         },
       })}
       tabBarOptions={{
-        activeTintColor: 'tomato',
-        inactiveTintColor: 'gray',
+        activeTintColor: colors.primary,
       }}>
       <Tab.Screen
         name="Cart"
-        component={CartScreen}
+        component={DefaultScreen}
         options={{title: 'Cart'}}
       />
-      <Tab.Screen name="Favorites" component={FavoritesScreen} />
-      <Tab.Screen name="Profile" component={ProfileScreen} />
-      <Tab.Screen name="Home" component={HomeScreen} />
+      <Tab.Screen name="Favorites" component={DefaultScreen} />
+      <Tab.Screen name="Profile" component={DefaultScreen} />
+      <Tab.Screen name="Home" component={DefaultScreen} />
       <Tab.Screen name="Categories" component={CategoriesScreen} />
     </Tab.Navigator>
   );
-}
+};
 
 const Stack = createStackNavigator();
 
-function App(): Node {
+const App = (): Node => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
@@ -141,6 +91,6 @@ function App(): Node {
       </Stack.Navigator>
     </NavigationContainer>
   );
-}
+};
 
 export default App;
