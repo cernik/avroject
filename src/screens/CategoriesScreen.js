@@ -66,7 +66,9 @@ const CategoriesScreen = (props: Props): Node => {
     loadData();
   };
 
-  const handleClearPress = () => {};
+  const handleClearPress = () => {
+    loadData();
+  };
 
   return (
     <>
