@@ -12,10 +12,17 @@ export const colors = {
 };
 
 const styles = StyleSheet.create({
+  flex1: {
+    flex: 1,
+  },
   container: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  loadingView: {
+    backgroundColor: 'rgba(0,0,0,.4)',
+    zIndex: 1,
   },
   logo: {
     width: 100,
@@ -63,6 +70,12 @@ const styles = StyleSheet.create({
   cartButtonText: {
     color: 'white',
     marginHorizontal: MARGIN,
+  },
+  headerLeft: {
+    marginStart: 18,
+  },
+  flag: {
+    fontSize: 32,
   },
 });
 
