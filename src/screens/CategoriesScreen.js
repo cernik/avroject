@@ -1,10 +1,10 @@
 // @flow
-/* eslint-disable react-native/no-inline-styles, react-hooks/exhaustive-deps */
+/* eslint-disable react-hooks/exhaustive-deps */
 import * as React from 'react';
 import type {Node} from 'react';
-import {View, FlatList} from 'react-native';
+import {Text, View, FlatList} from 'react-native';
 
-import {MARGIN} from '../styles';
+import Styles, {MARGIN} from '../styles';
 import * as api from '../api';
 import {LoadingView, ProductItem, SearchBar} from '../components';
 
@@ -45,46 +45,37 @@ const CategoriesScreen = (props: Props): Node => {
     }
   };
 
-  const onEndReached = () => {
-    loadMore();
-  };
-
   React.useEffect(() => {
     loadData();
   }, []);
+
+  const handleSearchPress = () => {
+    loadData();
+  };
 
   const handleItemPress = React.useCallback(item => {
     __DEV__ && console.log('item id pressed', item.id);
   }, []);
 
-  const renderItem = ({item}) => {
-    return <ProductItem item={item} onPress={handleItemPress} />;
-  };
-
-  const handleSearchPress = () => {
-    console.log('handleSearchPress');
-    loadData();
-  };
-
-  const handleClearPress = () => {
-    loadData();
-  };
+  const renderItem = ({item}) => (
+    <ProductItem item={item} onPress={handleItemPress} />
+  );
 
   return (
     <>
       <SearchBar
         onPress={handleSearchPress}
-        onClearSearch={handleClearPress}
+        onClearSearch={handleSearchPress}
         onChangeText={setSearchText}
       />
-      <View style={{flex: 1}}>
+      <View style={Styles.flex1}>
         {isLoading ? <LoadingView /> : null}
         <FlatList
           data={data}
           style={{marginHorizontal: MARGIN}}
           renderItem={renderItem}
           keyExtractor={item => String(item.id)}
-          onEndReached={onEndReached}
+          onEndReached={loadMore}
           onRefresh={loadData}
           refreshing={isLoading}
         />
