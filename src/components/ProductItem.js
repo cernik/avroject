@@ -8,6 +8,24 @@ import {useTranslation} from 'react-i18next';
 import Styles, {colors} from '../styles';
 import type {Product} from '../types';
 
+const ButtonContent = ({disabled}) => {
+  const i18n = useTranslation();
+  return (
+    <>
+      {disabled ? null : (
+        <Icon name="cart-outline" size={20} color={colors.white} />
+      )}
+      <Text
+        style={[
+          Styles.cartButtonText,
+          disabled && Styles.cartButtonTextDisabled,
+        ]}>
+        {disabled ? i18n.t('cta:outOfStock') : i18n.t('cta:addToCart')}
+      </Text>
+    </>
+  );
+};
+
 export const ProductItem = ({
   item,
   onPress,
@@ -15,8 +33,6 @@ export const ProductItem = ({
   item: Product,
   onPress: Product => void,
 }): Node => {
-  const i18n = useTranslation();
-
   const handlePress = () => {
     onPress(item);
   };
@@ -40,9 +56,14 @@ export const ProductItem = ({
               {item.price}
             </Text>
           </View>
-          <TouchableOpacity onPress={handlePress} style={Styles.cartButton}>
-            <Icon name="cart-outline" size={20} color={colors.white} />
-            <Text style={Styles.cartButtonText}>{i18n.t('cta:addToCart')}</Text>
+          <TouchableOpacity
+            disabled={item.out_of_stock}
+            onPress={handlePress}
+            style={[
+              Styles.cartButton,
+              item.out_of_stock && Styles.cartButtonDisabled,
+            ]}>
+            <ButtonContent disabled={item.out_of_stock} />
           </TouchableOpacity>
         </View>
       </View>

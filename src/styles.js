@@ -14,6 +14,7 @@ export const colors = {
 const styles = StyleSheet.create({
   flex1: {
     flex: 1,
+    backgroundColor: colors.white,
   },
   container: {
     flex: 1,
@@ -64,12 +65,20 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'tomato',
+    backgroundColor: colors.primary,
     borderRadius: 4,
   },
+  cartButtonDisabled: {
+    backgroundColor: colors.white,
+    borderColor: colors.disabled,
+    borderWidth: 1,
+  },
   cartButtonText: {
-    color: 'white',
+    color: colors.white,
     marginHorizontal: MARGIN,
+  },
+  cartButtonTextDisabled: {
+    color: colors.disabled,
   },
   headerLeft: {
     marginStart: 18,

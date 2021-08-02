@@ -17,6 +17,7 @@ i18n.use(initReactI18next).init({
       },
       cta: {
         addToCart: 'Add to cart',
+        outOfStock: 'Available soon :)',
       },
     },
     he: {
@@ -29,6 +30,7 @@ i18n.use(initReactI18next).init({
       },
       cta: {
         addToCart: 'להוסיף לעגלה',
+        outOfStock: 'תכף אשוב למלאי :)',
       },
     },
   },

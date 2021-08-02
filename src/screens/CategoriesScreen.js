@@ -2,7 +2,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import * as React from 'react';
 import type {Node} from 'react';
-import {Text, View, FlatList} from 'react-native';
+import {View, FlatList} from 'react-native';
 
 import Styles, {MARGIN} from '../styles';
 import * as api from '../api';
