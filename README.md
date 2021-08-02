@@ -19,14 +19,6 @@ yarn ios
 
 ```
 
-## Test
-
-```
-yarn test
-
-yarn test --updateSnapshot
-```
-
 ## Check types
 
 ```
@@ -38,4 +30,3 @@ yarn flow
 
 - State - Add state management if needs
 - UI - Add React context for themes and localization sample;
-- FlowJS - Cover promises;
